@@ -6,4 +6,8 @@
     <RootNamespace>NXCare.Domain</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\" />
+  </ItemGroup>
+
 </Project>

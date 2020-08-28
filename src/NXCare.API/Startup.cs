@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NXCare.API.Services;
+using NXCare.Domain.Interfaces.Services;
+using NXCare.API.Extensions;
 
 namespace NXCare.API
 {
@@ -19,7 +22,7 @@ namespace NXCare.API
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddNXCareDependencies(Configuration);
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -39,11 +42,15 @@ namespace NXCare.API
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            //Add authorization middleware to prevent anonymous user to access protected controller
+            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

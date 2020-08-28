@@ -2,7 +2,6 @@
 
 namespace NXCare.Domain.Interfaces.Entities
 {
-
     /// <summary>
     /// Base entity interface with generic identifier representing a table in the database and date fields (<see cref="IBaseEntityWithDates.CreatedOn"/>, <see cref="IBaseEntityWithDates.ModifiedOn"/>, <see cref="IBaseEntityWithDates.DeletedOn"/>.
     /// </summary>
@@ -14,7 +13,9 @@ namespace NXCare.Domain.Interfaces.Entities
     public interface IBaseEntityWithDates
     {
         DateTime CreatedOn { get; set; }
+
         DateTime? ModifiedOn { get; set; }
+
         DateTime? DeletedOn { get; set; }
     }
 }

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.0-rc.1.20428.2" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0-preview.8.20407.11" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\NXCare.Domain\NXCare.Domain.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NXCare.Client", "NXCare.Cli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NXCare.Domain", "NXCare.Domain\NXCare.Domain.csproj", "{EEBACF69-A5D0-46BE-BFF9-005AF3A18A90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NXCare.Data", "NXCare.Data\NXCare.Data.csproj", "{A6B8BD12-F9C7-44D8-B1D3-25E1B2F1AE10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NXCare.Data", "NXCare.Data\NXCare.Data.csproj", "{A6B8BD12-F9C7-44D8-B1D3-25E1B2F1AE10}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NXCare.Services", "NXCare.Services\NXCare.Services.csproj", "{3E22FB29-3A00-4D42-9372-1A05C6F47177}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NXCare.Services", "NXCare.Services\NXCare.Services.csproj", "{3E22FB29-3A00-4D42-9372-1A05C6F47177}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NXCare.Mock", "NXCare.Mock\NXCare.Mock.csproj", "{4C174DB6-92D7-45B6-B0AF-83E94D526109}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{3E22FB29-3A00-4D42-9372-1A05C6F47177}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E22FB29-3A00-4D42-9372-1A05C6F47177}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E22FB29-3A00-4D42-9372-1A05C6F47177}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C174DB6-92D7-45B6-B0AF-83E94D526109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C174DB6-92D7-45B6-B0AF-83E94D526109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C174DB6-92D7-45B6-B0AF-83E94D526109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C174DB6-92D7-45B6-B0AF-83E94D526109}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -62,9 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Country.sql" />
+    <Build Include="Tables\Language.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\PostDeploy\SeedCountries.sql" />
+    <None Include="Scripts\PostDeploy\SeendLanguage.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />

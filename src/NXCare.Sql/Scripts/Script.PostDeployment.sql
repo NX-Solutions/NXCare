@@ -13,3 +13,6 @@ Post-Deployment Script Template
 
 -- Seed/update Countries
 :r .\PostDeploy\SeedCountries.sql
+
+-- Seed/update Languages
+:r .\PostDeploy\SeedLanguages.sql

@@ -18,7 +18,7 @@ declare @countryTable table (
 ) 
 
 INSERT INTO @countryTable (Id, Alpha2Code, NameTranslationKey, Alpha3Code, NumericCode, PhoneCode) VALUES
-(1000, 'AF', 'Afghanistan', 'AFG', null, 93),
+(1, 'AF', 'Afghanistan', 'AFG', 4, 93),
 (2, 'AL', 'Albania', 'ALB', 8, 355),
 (3, 'DZ', 'Algeria', 'DZA', 12, 213),
 (4, 'AS', 'American Samoa', 'ASM', 16, 1684),

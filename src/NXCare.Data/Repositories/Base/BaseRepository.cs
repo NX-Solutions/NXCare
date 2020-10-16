@@ -119,7 +119,7 @@ namespace NXCare.Data.Repositories.Base
 
         public TEntity SoftDelete(TEntity entity)
         {
-            if (entity is BaseEntityWithDates<TKey> baseEntityWithDates && !baseEntityWithDates.DeletedOn.HasValue)
+            if (entity is IBaseEntityWithDates<TKey> baseEntityWithDates && !baseEntityWithDates.DeletedOn.HasValue)
             {
                 baseEntityWithDates.DeletedOn = DateTime.UtcNow;
             }

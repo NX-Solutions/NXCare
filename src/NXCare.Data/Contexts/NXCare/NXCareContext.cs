@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NXCare.Data.Contexts.Base;
 using NXCare.Domain.Entities;
 
 namespace NXCare.Data.Contexts.NXCare
 {
-    public partial class NXCareContext : DbContext
+    public partial class NXCareContext : BaseContext<NXCareContext>
     {
         public NXCareContext()
         {

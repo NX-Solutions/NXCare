@@ -1,0 +1,73 @@
+﻿{
+   "ContextClassName": "NXCareContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "..\\NXCare.Data\\Contexts",
+   "OutputPath": "Entities",
+   "ProjectRootNamespace": "NXCare.Domain",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Address]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Country]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Language]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Location]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Patient]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PatientAddress]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Physician]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[PhysicianAddress]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Service]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Speciality]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Transition]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[Visit]"
+      }
+   ],
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNodaTime": false,
+   "UseSpatial": false,
+   "UseStoredProcedures": false
+}

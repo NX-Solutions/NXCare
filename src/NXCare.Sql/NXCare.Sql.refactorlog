@@ -7,4 +7,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="NameTranslationKey" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="5ed8c13d-9e08-4616-a365-be9c4e1aef98" ChangeDateTime="10/16/2020 19:03:45">
+    <Property Name="ElementName" Value="[dbo].[Location].[Service]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Location]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ServiceId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c9f47587-1114-4683-a578-2e6ad3b3e9b7" ChangeDateTime="10/16/2020 19:24:16">
+    <Property Name="ElementName" Value="[dbo].[Visit].[RefereePhysicianId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Visit]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ReferringPhysicianId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="83f075ca-e0d8-4f5d-ace2-5580af584687" ChangeDateTime="10/16/2020 19:28:55">
+    <Property Name="ElementName" Value="[dbo].[Visit].[ReferringPhysicianId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Visit]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AdmittingPhysicianId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2b8baae3-6b48-4407-9f13-a4c5b5aa8087" ChangeDateTime="10/16/2020 19:31:48">
+    <Property Name="ElementName" Value="[dbo].[Physician].[Lastname]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Physician]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LastName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5587e377-1280-4406-ad89-eb0130c68366" ChangeDateTime="10/16/2020 19:31:51">
+    <Property Name="ElementName" Value="[dbo].[Physician].[Middlename]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Physician]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MiddleName" />
+  </Operation>
 </Operations>

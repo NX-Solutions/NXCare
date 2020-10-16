@@ -63,6 +63,17 @@
   <ItemGroup>
     <Build Include="Tables\Country.sql" />
     <Build Include="Tables\Language.sql" />
+    <None Include="Scripts\PostDeploy\SeedLanguages.sql" />
+    <Build Include="Tables\Address.sql" />
+    <Build Include="Tables\Location.sql" />
+    <Build Include="Tables\Service.sql" />
+    <Build Include="Tables\Transition.sql" />
+    <Build Include="Tables\Visit.sql" />
+    <Build Include="Tables\Physician.sql" />
+    <Build Include="Tables\Speciality.sql" />
+    <Build Include="Tables\Patient.sql" />
+    <Build Include="Tables\PatientAddress.sql" />
+    <Build Include="Tables\PhysicianAddress.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\PostDeploy\SeedCountries.sql" />

@@ -1,17 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+	  <TargetFramework>net5.0</TargetFramework>
+	  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <UserSecretsId>ab46141a-8bcb-4e21-8fc9-a1d56df383a6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.0-rc.1.20421.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NXCare.Client\NXCare.Client.csproj" />
     <ProjectReference Include="..\NXCare.Domain\NXCare.Domain.csproj" />
+    <ProjectReference Include="..\NXCare.Services\NXCare.Services.csproj" />
   </ItemGroup>
 
 

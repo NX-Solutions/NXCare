@@ -1,0 +1,26 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+WORKDIR /src
+COPY ["NXCare.API/NXCare.API.csproj", "NXCare.API/"]
+COPY ["NXCare.Services/NXCare.Services.csproj", "NXCare.Services/"]
+COPY ["NXCare.Data/NXCare.Data.csproj", "NXCare.Data/"]
+COPY ["NXCare.Domain/NXCare.Domain.csproj", "NXCare.Domain/"]
+COPY ["NXCare.Mappers/NXCare.Mappers.csproj", "NXCare.Mappers/"]
+COPY ["NXCare.Client/NXCare.Client.csproj", "NXCare.Client/"]
+RUN dotnet restore "NXCare.API/NXCare.API.csproj"
+COPY . .
+WORKDIR "/src/NXCare.API"
+RUN dotnet build "NXCare.API.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "NXCare.API.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "NXCare.API.dll"]

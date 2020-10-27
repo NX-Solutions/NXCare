@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NXCare.Data\NXCare.Data.csproj" />
     <ProjectReference Include="..\NXCare.Domain\NXCare.Domain.csproj" />
-    <ProjectReference Include="..\NXCare.Mappers\NXCare.Mappers.csproj" />
   </ItemGroup>
 
 </Project>

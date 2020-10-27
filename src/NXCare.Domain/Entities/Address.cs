@@ -13,7 +13,7 @@ namespace NXCare.Domain.Entities
         }
 
         public int Id { get; set; }
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
         public string PostalCode { get; set; }
         public string City { get; set; }
         public string Street { get; set; }

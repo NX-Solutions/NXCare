@@ -22,12 +22,12 @@ namespace NXCare.Domain.Entities
         public string LastName { get; set; }
         public string MiddleName { get; set; }
         public string FirstName { get; set; }
-        public DateTime BirthDate { get; set; }
-        public int NationalityId { get; set; }
-        public int LanguageId { get; set; }
-        public int Sex { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public int? NationalityId { get; set; }
+        public int? LanguageId { get; set; }
+        public int? Sex { get; set; }
         public string MedicalLicenseId { get; set; }
-        public int SpecialityId { get; set; }
+        public int? SpecialityId { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public DateTime? DeletedOn { get; set; }

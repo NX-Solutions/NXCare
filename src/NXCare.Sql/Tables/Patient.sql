@@ -21,3 +21,5 @@ GO
 CREATE INDEX [IX_Patient_Country] ON [dbo].[Patient] ([NationalityId])
 GO
 CREATE INDEX [IX_Patient_Language] ON [dbo].[Patient] ([LanguageId])
+GO
+CREATE UNIQUE INDEX [IX_Patient_ExternalId] ON [dbo].[Patient] ([ExternalId])

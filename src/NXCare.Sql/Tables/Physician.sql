@@ -15,6 +15,7 @@
     [CreatedOn]        DATETIME2               NOT NULL DEFAULT GETUTCDATE(), 
     [ModifiedOn]       DATETIME2               NULL, 
     [DeletedOn]        DATETIME2               NULL,
+    [ExternalId] NVARCHAR(50) NULL, 
     CONSTRAINT         [FK_Physician_Country]  FOREIGN KEY ([NationalityId]) REFERENCES [Country]([Id]), 
     CONSTRAINT         [FK_Physician_Language] FOREIGN KEY ([LanguageId]) REFERENCES [Language]([Id]), 
 )

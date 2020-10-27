@@ -4,7 +4,7 @@ using NXCare.Domain.Interfaces.Entities;
 
 namespace NXCare.Domain.Entities
 {
-    public partial class Visit : BaseEntity, IBaseEntityWithDates<int>
+    public partial class Visit : AbstractBaseEntity, IBaseEntityWithDates<int>
     {
     }
 }

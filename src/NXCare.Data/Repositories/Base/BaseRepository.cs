@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NXCare.Domain.Entities;
 using NXCare.Domain.Entities.Base;
 using NXCare.Domain.Interfaces.Entities;
 using NXCare.Domain.Interfaces.Repositories.Base;
@@ -16,7 +17,7 @@ namespace NXCare.Data.Repositories.Base
     /// </summary>
     /// <typeparam name="TEntity">the type of the repository's entity</typeparam>
     /// <typeparam name="TKey">the type of the TEntity primary key</typeparam>
-    public class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : BaseEntity, IBaseEntity<TKey>
+    public class BaseRepository<TEntity, TKey> : IBaseRepository<TEntity, TKey> where TEntity : AbstractBaseEntity, IBaseEntity<TKey>
     {
         protected DbSet<TEntity> Set;
         private readonly DbContext context;

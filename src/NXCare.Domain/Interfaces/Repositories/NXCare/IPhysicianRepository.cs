@@ -1,9 +1,10 @@
-﻿using NXCare.Domain.Entities;
+﻿using System;
+using NXCare.Domain.Entities;
 using NXCare.Domain.Interfaces.Repositories.Base;
 
 namespace NXCare.Domain.Interfaces.Repositories.NXCare
 {
-    public interface IPhysicianRepository : IBaseRepository<Physician, int>
+    public interface IPhysicianRepository : IPublicBaseRepository<Physician, int, Guid, string>
     {
     }
 }

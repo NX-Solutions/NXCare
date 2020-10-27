@@ -34,6 +34,7 @@ namespace NXCare.Data.Contexts.Base
             try
             {
                 UpdateDates();
+                HandlePublicEntities();
                 savedNumber = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
@@ -62,6 +63,15 @@ namespace NXCare.Data.Contexts.Base
             }
         }
 
+        public void HandlePublicEntities()
+        {
+            var publicEntityEntries = ChangeTracker.Entries<INonTypedPublicBaseEntity>().Where(entry => entry.State == EntityState.Modified); ;
+            foreach (var entityEntry in publicEntityEntries)
+            {
+                entityEntry.Property(nameof(IPublicBaseEntity<object,object,object>.PublicId)).IsModified = false;
+                entityEntry.Property(nameof(IPublicBaseEntity<object,object,object>.ExternalId)).IsModified = false;
+            }
+        }
 
         private void HandleDbUpdateException(SqlException sqlException)
         {

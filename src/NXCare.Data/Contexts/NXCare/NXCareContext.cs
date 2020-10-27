@@ -16,27 +16,16 @@ namespace NXCare.Data.Contexts.NXCare
         }
 
         public virtual DbSet<Address> Address { get; set; }
-
         public virtual DbSet<Country> Country { get; set; }
-
         public virtual DbSet<Language> Language { get; set; }
-
         public virtual DbSet<Location> Location { get; set; }
-
         public virtual DbSet<Patient> Patient { get; set; }
-
         public virtual DbSet<PatientAddress> PatientAddress { get; set; }
-
         public virtual DbSet<Physician> Physician { get; set; }
-
         public virtual DbSet<PhysicianAddress> PhysicianAddress { get; set; }
-
         public virtual DbSet<Service> Service { get; set; }
-
         public virtual DbSet<Speciality> Speciality { get; set; }
-
         public virtual DbSet<Transition> Transition { get; set; }
-
         public virtual DbSet<Visit> Visit { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,30 +35,21 @@ namespace NXCare.Data.Contexts.NXCare
                 entity.HasIndex(e => e.CountryId)
                     .HasName("IX_Address_Country");
 
-                entity.Property(e => e.City)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.City).HasMaxLength(100);
 
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
 
                 entity.Property(e => e.Floor).HasMaxLength(50);
 
-                entity.Property(e => e.Number)
-                    .IsRequired()
-                    .HasMaxLength(10);
+                entity.Property(e => e.Number).HasMaxLength(10);
 
-                entity.Property(e => e.PostalCode)
-                    .IsRequired()
-                    .HasMaxLength(15);
+                entity.Property(e => e.PostalCode).HasMaxLength(15);
 
-                entity.Property(e => e.Street)
-                    .IsRequired()
-                    .HasMaxLength(100);
+                entity.Property(e => e.Street).HasMaxLength(100);
 
                 entity.HasOne(d => d.Country)
                     .WithMany(p => p.Address)
                     .HasForeignKey(d => d.CountryId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Address_Country");
             });
 
@@ -153,6 +133,9 @@ namespace NXCare.Data.Contexts.NXCare
 
             modelBuilder.Entity<Patient>(entity =>
             {
+                entity.HasIndex(e => e.ExternalId)
+                    .IsUnique();
+
                 entity.HasIndex(e => e.LanguageId)
                     .HasName("IX_Physician_Language");
 
@@ -171,26 +154,20 @@ namespace NXCare.Data.Contexts.NXCare
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.MiddleName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
 
-                entity.Property(e => e.NationalId)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.NationalId).HasMaxLength(50);
 
                 entity.Property(e => e.PublicId).HasDefaultValueSql("(newid())");
 
                 entity.HasOne(d => d.Language)
                     .WithMany(p => p.Patient)
                     .HasForeignKey(d => d.LanguageId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Patient_Language");
 
                 entity.HasOne(d => d.Nationality)
                     .WithMany(p => p.Patient)
                     .HasForeignKey(d => d.NationalityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Patient_Country");
             });
 
@@ -233,26 +210,20 @@ namespace NXCare.Data.Contexts.NXCare
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.MiddleName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.MiddleName).HasMaxLength(50);
 
-                entity.Property(e => e.NationalId)
-                    .IsRequired()
-                    .HasMaxLength(50);
+                entity.Property(e => e.NationalId).HasMaxLength(50);
 
                 entity.Property(e => e.PublicId).HasDefaultValueSql("(newid())");
 
                 entity.HasOne(d => d.Language)
                     .WithMany(p => p.Physician)
                     .HasForeignKey(d => d.LanguageId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Physician_Language");
 
                 entity.HasOne(d => d.Nationality)
                     .WithMany(p => p.Physician)
                     .HasForeignKey(d => d.NationalityId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Physician_Country");
             });
 
@@ -300,19 +271,19 @@ namespace NXCare.Data.Contexts.NXCare
             modelBuilder.Entity<Transition>(entity =>
             {
                 entity.HasIndex(e => e.AdmittingPhysicianId)
-                    .HasDatabaseName("IX_Transition_Admitting_Physician");
+                    .HasName("IX_Transition_Admitting_Physician");
 
                 entity.HasIndex(e => e.AttendingPhysicianId)
-                    .HasDatabaseName("IX_Transition_Attending_Physician");
+                    .HasName("IX_Transition_Attending_Physician");
 
                 entity.HasIndex(e => e.ConsultingPhysicianId)
-                    .HasDatabaseName("IX_Transition_Consulting_Physician");
+                    .HasName("IX_Transition_Consulting_Physician");
 
                 entity.HasIndex(e => e.Id)
-                    .HasDatabaseName("IX_Transition_Visit");
+                    .HasName("IX_Transition_Visit");
 
                 entity.HasIndex(e => e.ReferringPhysicianId)
-                    .HasDatabaseName("IX_Transition_Referring_Physician");
+                    .HasName("IX_Transition_Referring_Physician");
 
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
 

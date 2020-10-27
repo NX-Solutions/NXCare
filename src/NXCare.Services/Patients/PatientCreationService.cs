@@ -4,42 +4,40 @@ using Microsoft.Extensions.Logging;
 using NXCare.Domain.DTO;
 using NXCare.Domain.Enums;
 using NXCare.Domain.Extensions;
+using NXCare.Domain.Interfaces.Mappers;
 using NXCare.Domain.Interfaces.Repositories.NXCare;
+using NXCare.Domain.Interfaces.Services;
 
 namespace NXCare.Services.Patients
 {
-    public class PatientCreationService
+    public class PatientCreationService : IPatientCreationService
     {
         private readonly ILogger<PatientCreationService> logger;
         private readonly IPatientRepository patientRepository;
+        private readonly IPatientMapper patientMapper;
 
-        public PatientCreationService(ILogger<PatientCreationService> logger, IPatientRepository patientRepository)
+        public PatientCreationService(ILogger<PatientCreationService> logger, IPatientRepository patientRepository, IPatientMapper patientMapper)
         {
             this.logger            = logger;
             this.patientRepository = patientRepository;
+            this.patientMapper     = patientMapper;
         }
 
-        //TODO patient's external id should be unique ?
-
-        public async Task<PatientCreationResults> AddOrUpdatePatientAsync(Patient patientDTO, string source)
+        public async Task<(PatientCreationResults PatientCreationResults, Guid PublicId)> AddOrUpdatePatientAsync(Patient patient, string source)
         {
             try
             {
-                LogReceivedPatient(patientDTO, source);
-                var existingPatient = await patientRepository.GetByExternalIdAsync(patientDTO.ExternalId).ConfigureAwait(false);
-                var patientEntity   = patientDTO.ToPatient();
-
-                //TODO if existing, check potential null value for the new incoming patient and if yes fall back for those ones to the previous value ?
-                if (existingPatient != null) patientEntity.Id = existingPatient.Id;
+                LogReceivedPatient(patient, source);
+                var (patientEntity, isNew) = await patientMapper.ToEntityAsync(patient).ConfigureAwait(false);
                 patientRepository.AddOrUpdate(patientEntity);
                 await patientRepository.SaveChangesAsync().ConfigureAwait(false);
-                LogAddedOrUpdatedPatient(patientDTO, source);
-                return PatientCreationResults.Success;
+                LogAddedOrUpdatedPatient(patient, source);
+                return (isNew ? PatientCreationResults.Created : PatientCreationResults.Updated, patientEntity.PublicId);
             }
             catch (Exception ex)
             {
-                logger.LogError((int) LogEventIds.PatientCreation, ex, $"{nameof(AddOrUpdatePatientAsync)}: Data received: {patientDTO.ToJson()}");
-                return PatientCreationResults.Error;
+                logger.LogError((int) LogEventIds.PatientCreation, ex, $"{nameof(AddOrUpdatePatientAsync)}: Data received: {patient.ToJson()}");
+                return (PatientCreationResults.Error, Guid.Empty);
             }
         }
 
@@ -87,33 +85,12 @@ namespace NXCare.Services.Patients
 
         private void LogReceivedPatient(Patient patientDTO, string source)
         {
-            logger.LogInformation((int) LogEventIds.PatientCreation, $"A new patient with external id `{patientDTO.ExternalId}` - {patientDTO.Firstname} {patientDTO.Lastname} received from {source}");
+            logger.LogInformation((int) LogEventIds.PatientCreation, $"A new patient with external id `{patientDTO.ExternalId}` - {patientDTO.FirstName} {patientDTO.LastName} received from {source}");
         }
 
         private void LogAddedOrUpdatedPatient(Patient patientDTO, string source)
         {
-            logger.LogInformation((int) LogEventIds.PatientCreation, $"Patient sent by {source} with external id `{patientDTO.ExternalId} - {patientDTO.Firstname} {patientDTO.Lastname} was successfully added to the database ");
-        }
-    }
-
-    public static class PatientMapper
-    {
-        public static Domain.Entities.Patient ToPatient(this Patient patientDTO)
-        {
-            return patientDTO == null
-                ? null
-                : new Domain.Entities.Patient()
-                {
-                    ExternalId    = patientDTO.ExternalId,
-                    //LanguageId  = pati
-                    BirthDate     = patientDTO.Birthdate,
-                    FirstName     = patientDTO.Firstname,
-                    LastName      = patientDTO.Firstname,
-                    MiddleName    = patientDTO.Middlename,
-                    NationalId    = patientDTO.NationalId,
-                    Sex           = patientDTO.Sex,
-                    NationalityId = patientDTO.Nationality.Id
-                };
+            logger.LogInformation((int) LogEventIds.PatientCreation, $"Patient sent by {source} with external id `{patientDTO.ExternalId} - {patientDTO.FirstName} {patientDTO.LastName} was successfully added to the database ");
         }
     }
 }

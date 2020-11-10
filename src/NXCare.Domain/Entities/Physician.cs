@@ -18,7 +18,6 @@ namespace NXCare.Domain.Entities
 
         public int Id { get; set; }
         public Guid PublicId { get; set; }
-        public string ExternalId { get; set; }
         public string NationalId { get; set; }
         public string LastName { get; set; }
         public string MiddleName { get; set; }
@@ -32,6 +31,7 @@ namespace NXCare.Domain.Entities
         public DateTime CreatedOn { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public DateTime? DeletedOn { get; set; }
+        public string ExternalId { get; set; }
 
         public virtual Language Language { get; set; }
         public virtual Country Nationality { get; set; }

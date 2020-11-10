@@ -10,6 +10,6 @@
     CONSTRAINT   [FK_PatientAddress_Address] FOREIGN KEY ([AddressId]) REFERENCES [Address]([Id])
 )
 GO
-CREATE INDEX [IX_PatientAddress_Patient] ON [dbo].[PatientAddress] ([PatientId])
+CREATE UNIQUE INDEX [IX_PatientAddress_Patient] ON [dbo].[PatientAddress] ([PatientId])
 GO
-CREATE INDEX [IX_PatientAddress_Address] ON [dbo].[PatientAddress] ([AddressId])
+CREATE UNIQUE INDEX [IX_PatientAddress_Address] ON [dbo].[PatientAddress] ([AddressId])

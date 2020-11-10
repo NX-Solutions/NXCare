@@ -6,11 +6,6 @@ namespace NXCare.Domain.Entities
 {
     public partial class Patient
     {
-        public Patient()
-        {
-            PatientAddress = new HashSet<PatientAddress>();
-        }
-
         public int Id { get; set; }
         public Guid PublicId { get; set; }
         public string NationalId { get; set; }
@@ -28,6 +23,6 @@ namespace NXCare.Domain.Entities
 
         public virtual Language Language { get; set; }
         public virtual Country Nationality { get; set; }
-        public virtual ICollection<PatientAddress> PatientAddress { get; set; }
+        public virtual PatientAddress PatientAddress { get; set; }
     }
 }

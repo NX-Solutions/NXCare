@@ -8,7 +8,6 @@ namespace NXCare.Domain.Entities
     {
         public Address()
         {
-            PatientAddress = new HashSet<PatientAddress>();
             PhysicianAddress = new HashSet<PhysicianAddress>();
         }
 
@@ -24,7 +23,7 @@ namespace NXCare.Domain.Entities
         public DateTime? DeletedOn { get; set; }
 
         public virtual Country Country { get; set; }
-        public virtual ICollection<PatientAddress> PatientAddress { get; set; }
+        public virtual PatientAddress PatientAddress { get; set; }
         public virtual ICollection<PhysicianAddress> PhysicianAddress { get; set; }
     }
 }

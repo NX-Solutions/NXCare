@@ -28,12 +28,12 @@ namespace NXCare.Data.Repositories.Base
             this.context = context;
         }
 
-        public async Task<TEntity> GetByIdAsync(TKey id)
+        public virtual async Task<TEntity> GetByIdAsync(TKey id)
         {
             return await Set.FindAsync(id).ConfigureAwait(false);
         }
 
-        public Task<TEntity> GetByIdAsync(TKey id, params Expression<Func<TEntity, object>>[] includes)
+        public virtual Task<TEntity> GetByIdAsync(TKey id, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = Set;
 
@@ -45,12 +45,12 @@ namespace NXCare.Data.Repositories.Base
             return query.SingleOrDefaultAsync(entity => entity.Id.Equals(id));
         }
 
-        public  Task<List<TEntity>> GetAllAsync()
+        public virtual Task<List<TEntity>> GetAllAsync()
         {
             return Set.ToListAsync();
         }
 
-        public Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filterCriteria = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
+        public virtual Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filterCriteria = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> query = Set;
 
@@ -66,17 +66,17 @@ namespace NXCare.Data.Repositories.Base
             return query.ToListAsync();
         }
 
-        public TEntity Add(TEntity entity)
+        public virtual TEntity Add(TEntity entity)
         {
             return Set.Add(entity)?.Entity;
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public virtual void AddRange(IEnumerable<TEntity> entities)
         {
             Set.AddRange(entities);
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             var existingEntity = Set.Local.FirstOrDefault(localEntity => localEntity.Id.Equals(entity.Id));
             if (existingEntity != null)
@@ -89,7 +89,7 @@ namespace NXCare.Data.Repositories.Base
             }
         }
 
-        public void UpdateRange(IEnumerable<TEntity> entities)
+        public virtual void UpdateRange(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
             {
@@ -97,7 +97,7 @@ namespace NXCare.Data.Repositories.Base
             }
         }
 
-        public void AddOrUpdate(TEntity entity)
+        public virtual void AddOrUpdate(TEntity entity)
         {
             if (entity.Id.Equals(default(TKey)))
             {
@@ -109,17 +109,17 @@ namespace NXCare.Data.Repositories.Base
             }
         }
 
-        public TEntity Delete(TEntity entity)
+        public virtual TEntity Delete(TEntity entity)
         {
             return Set.Remove(entity).Entity;
         }
 
-        public void DeleteRange(IEnumerable<TEntity> entities)
+        public virtual void DeleteRange(IEnumerable<TEntity> entities)
         {
             Set.RemoveRange(entities);
         }
 
-        public TEntity SoftDelete(TEntity entity)
+        public virtual TEntity SoftDelete(TEntity entity)
         {
             if (entity is IBaseEntityWithDates<TKey> baseEntityWithDates && !baseEntityWithDates.DeletedOn.HasValue)
             {
@@ -129,23 +129,23 @@ namespace NXCare.Data.Repositories.Base
             return entity;
         }
 
-        public async Task<TEntity> DeleteByIdAsync(TKey id)
+        public virtual async Task<TEntity> DeleteByIdAsync(TKey id)
         {
             var entity = await GetByIdAsync(id).ConfigureAwait(false);
             return Delete(entity);
         }
 
-        public async Task<TEntity> SoftDeleteByIdAsync(TKey id)
+        public virtual async Task<TEntity> SoftDeleteByIdAsync(TKey id)
         {
             var entity = await GetByIdAsync(id).ConfigureAwait(false);
             return SoftDelete(entity);
         }
 
-        public async Task<bool> ExistsAsync(TKey id)
+        public virtual async Task<bool> ExistsAsync(TKey id)
         {
             return await Set.FindAsync(id).ConfigureAwait(false) != null;
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => context.SaveChangesAsync(cancellationToken);
+        public virtual Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => context.SaveChangesAsync(cancellationToken);
     }
 }

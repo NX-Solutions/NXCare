@@ -14,25 +14,25 @@ namespace NXCare.Data.Repositories.Base
         {
         }
 
-        public Task<TEntity> GetByPublicIdAsync(TPublicKey publicKey)
+        public virtual Task<TEntity> GetByPublicIdAsync(TPublicKey publicKey)
         {
             return Set.FirstOrDefaultAsync(entity => entity.PublicId.Equals(publicKey));
         }
 
-        public Task<TEntity> GetByExternalIdAsync(TExternalKey externalKey)
+        public virtual Task<TEntity> GetByExternalIdAsync(TExternalKey externalKey)
         {
             return Set.FirstOrDefaultAsync(entity => entity.ExternalId.Equals(externalKey));
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> DeleteAsync(TPublicKey publicId)
+        public virtual async Task<TEntity> DeleteAsync(TPublicKey publicId)
         {
             var patient = await GetByPublicIdAsync(publicId).ConfigureAwait(false);
             return patient == null ? null : SoftDelete(patient);
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> DeleteAsync(TExternalKey externalId)
+        public virtual async Task<TEntity> DeleteAsync(TExternalKey externalId)
         {
             var patient = await GetByExternalIdAsync(externalId).ConfigureAwait(false);
             return patient == null ? null : SoftDelete(patient);

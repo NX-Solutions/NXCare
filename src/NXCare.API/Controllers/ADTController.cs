@@ -24,16 +24,14 @@ namespace NXCare.API.Controllers
         {
             try
             {
-                var (patientCreationResults, publicId) = await patientCreationService.AddOrUpdatePatientAsync(patient, "TEST SOURCE").ConfigureAwait(false);
+                var (patientCreationResults, addOrUpdatedPatient) = await patientCreationService.AddOrUpdatePatientAsync(patient, "TEST SOURCE").ConfigureAwait(false);
 
                 if (patientCreationResults == PatientCreationResults.Error)
                 {
                     throw new Exception();
                 }
 
-                patient.Id = publicId;
-
-                return patientCreationResults == PatientCreationResults.Created ? Created(string.Empty, patient) : StatusCode(StatusCodes.Status200OK, patient);
+                return patientCreationResults == PatientCreationResults.Created ? Created(string.Empty, addOrUpdatedPatient) : StatusCode(StatusCodes.Status200OK, addOrUpdatedPatient);
             }
             catch (Exception ex)
             {

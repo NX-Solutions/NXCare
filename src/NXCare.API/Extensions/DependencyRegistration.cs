@@ -8,6 +8,7 @@ using NXCare.Domain.Interfaces.Mappers;
 using NXCare.Domain.Interfaces.Repositories.NXCare;
 using NXCare.Domain.Interfaces.Services;
 using NXCare.Mappers;
+using NXCare.Services.Addresses;
 using NXCare.Services.Patients;
 
 namespace NXCare.API.Extensions
@@ -30,7 +31,6 @@ namespace NXCare.API.Extensions
             services.AddScoped<IPatientRepository       , PatientRepository>();
             services.AddScoped<ILanguageRepository      , LanguageRepository>();
             services.AddScoped<IAddressRepository       , AddressRepository>();
-            services.AddScoped<IPatientCreationService  , PatientCreationService>();
             services.AddScoped<ICountryRepository       , CountryRepository>();
             services.AddScoped<IPhysicianRepository     , PhysicianRepository>();
             services.AddScoped<ITransitionRepository    , TransitionRepository>();
@@ -41,6 +41,8 @@ namespace NXCare.API.Extensions
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IAddressService       , AddressService>();
+            services.AddScoped<IPatientCreationService  , PatientCreationService>();
         }
 
         public static void RegisterMappers(this IServiceCollection services, IConfiguration configuration)

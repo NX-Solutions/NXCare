@@ -26,6 +26,8 @@ namespace NXCare.Mappers
 
         public async Task<(Patient Patient, bool IsNew)> ToEntityAsync(Domain.DTO.Patient patient)
         {
+            if (patient == null) return (null, false);
+
             var existingPatient = await patientRepository.GetByExternalIdAsync(patient.ExternalId).ConfigureAwait(false);
 
             var newPatient = new Patient

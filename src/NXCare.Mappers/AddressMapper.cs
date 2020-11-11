@@ -17,6 +17,8 @@ namespace NXCare.Mappers
 
         public async Task<Domain.Entities.Address> ToEntityAsync(Domain.DTO.Address address)
         {
+            if (address == null) return null;
+
             var country = await countryRepository.GetByIdAlpha2CodeAsync(address.Country.Alpha2Code).ConfigureAwait(false);
 
             return new Domain.Entities.Address()

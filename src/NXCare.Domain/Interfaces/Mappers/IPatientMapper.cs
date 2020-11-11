@@ -12,5 +12,7 @@ namespace NXCare.Domain.Interfaces.Mappers
         /// <param name="patient">Patient data sent by ADT</param>
         /// <returns>A entity with data of <see cref="patient"/></returns>
         Task<(Patient Patient, bool IsNew)> ToEntityAsync(DTO.Patient patient);
+
+        Domain.DTO.Patient ToDTO(Patient patient);
     }
 }

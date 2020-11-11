@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NXCare.Domain.DTO;
@@ -13,17 +14,19 @@ namespace NXCare.Services.Patients
     public class PatientCreationService : IPatientCreationService
     {
         private readonly ILogger<PatientCreationService> logger;
+        private readonly IAddressService addressService;
         private readonly IPatientRepository patientRepository;
         private readonly IPatientMapper patientMapper;
 
-        public PatientCreationService(ILogger<PatientCreationService> logger, IPatientRepository patientRepository, IPatientMapper patientMapper)
+        public PatientCreationService(ILogger<PatientCreationService> logger, IAddressService addressService, IPatientRepository patientRepository, IPatientMapper patientMapper)
         {
-            this.logger            = logger;
-            this.patientRepository = patientRepository;
-            this.patientMapper     = patientMapper;
+            this.logger                   = logger;
+            this.addressService           = addressService;
+            this.patientRepository        = patientRepository;
+            this.patientMapper            = patientMapper;
         }
 
-        public async Task<(PatientCreationResults PatientCreationResults, Guid PublicId)> AddOrUpdatePatientAsync(Patient patient, string source)
+        public async Task<(PatientCreationResults PatientCreationResults, Patient Patient)> AddOrUpdatePatientAsync(Patient patient, string source)
         {
             try
             {
@@ -31,13 +34,15 @@ namespace NXCare.Services.Patients
                 var (patientEntity, isNew) = await patientMapper.ToEntityAsync(patient).ConfigureAwait(false);
                 patientRepository.AddOrUpdate(patientEntity);
                 await patientRepository.SaveChangesAsync().ConfigureAwait(false);
+                await addressService.AddOrUpdatePatientAddress(patientEntity.PublicId, patient.Addresses.FirstOrDefault());
                 LogAddedOrUpdatedPatient(patient, source);
-                return (isNew ? PatientCreationResults.Created : PatientCreationResults.Updated, patientEntity.PublicId);
+
+                return (isNew ? PatientCreationResults.Created : PatientCreationResults.Updated, patientMapper.ToDTO(await patientRepository.GetByIdAsync(patientEntity.Id, true)));
             }
             catch (Exception ex)
             {
                 logger.LogError((int) LogEventIds.PatientCreation, ex, $"{nameof(AddOrUpdatePatientAsync)}: Data received: {patient.ToJson()}");
-                return (PatientCreationResults.Error, Guid.Empty);
+                return (PatientCreationResults.Error, null);
             }
         }
 
@@ -45,7 +50,7 @@ namespace NXCare.Services.Patients
         {
             try
             {
-                var deletedPatient = await patientRepository.DeleteAsync(id).ConfigureAwait(false);
+                var deletedPatient    = await patientRepository.DeleteAsync(id).ConfigureAwait(false);
                 return deletedPatient == null ? PatientDeletionResult.DoesNotExist : PatientDeletionResult.Success;
             }
             catch (Exception ex)

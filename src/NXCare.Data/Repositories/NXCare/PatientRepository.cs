@@ -14,5 +14,15 @@ namespace NXCare.Data.Repositories.NXCare
         public PatientRepository(NXCareContext context) : base(context)
         {
         }
+
+        public Task<Patient> GetByIdAsync(int id, bool includeAllRelationships = false)
+        {
+            return includeAllRelationships == false
+                ? base.GetByIdAsync(id)
+                : Set.Include(patient => patient.Language)
+                    .Include(patient => patient.PatientAddress.Address).ThenInclude(patient => patient.PatientAddress.Address.Country)
+                    .Include(patient => patient.Nationality)
+                    .FirstOrDefaultAsync(patient => patient.Id == id);
+        }
     }
 }

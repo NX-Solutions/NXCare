@@ -27,14 +27,15 @@ namespace NXCare.API.Extensions
             services.AddDbContext<NXCareContext>(options => options.UseSqlServer(configuration.GetConnectionString("NXCare")));
 
             // Register repositories in a scoped life time
-            services.AddScoped<IPatientRepository     , PatientRepository>();
-            services.AddScoped<ILanguageRepository    , LanguageRepository>();
-            services.AddScoped<IAddressRepository     , AddressRepository>();
-            services.AddScoped<IPatientCreationService, PatientCreationService>();
-            services.AddScoped<ICountryRepository     , CountryRepository>();
-            services.AddScoped<IPhysicianRepository   , PhysicianRepository>();
-            services.AddScoped<ITransitionRepository  , TransitionRepository>();
-            services.AddScoped<IVisitRepository       , VisitRepository>();
+            services.AddScoped<IPatientRepository       , PatientRepository>();
+            services.AddScoped<ILanguageRepository      , LanguageRepository>();
+            services.AddScoped<IAddressRepository       , AddressRepository>();
+            services.AddScoped<IPatientCreationService  , PatientCreationService>();
+            services.AddScoped<ICountryRepository       , CountryRepository>();
+            services.AddScoped<IPhysicianRepository     , PhysicianRepository>();
+            services.AddScoped<ITransitionRepository    , TransitionRepository>();
+            services.AddScoped<IVisitRepository         , VisitRepository>();
+            services.AddScoped<IPatientAddressRepository, PatientAddressRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
@@ -44,7 +45,10 @@ namespace NXCare.API.Extensions
 
         public static void RegisterMappers(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IPatientMapper, PatientMapper>();
+            services.AddScoped<IAddressMapper , AddressMapper>();
+            services.AddScoped<ICountryMapper , CountryMapper>();
+            services.AddScoped<ILanguageMapper, LanguageMapper>();
+            services.AddScoped<IPatientMapper , PatientMapper>();
         }
     }
 }

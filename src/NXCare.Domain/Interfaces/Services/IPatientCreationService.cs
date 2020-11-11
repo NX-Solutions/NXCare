@@ -7,6 +7,6 @@ namespace NXCare.Domain.Interfaces.Services
 {
     public interface IPatientCreationService
     {
-        Task<(PatientCreationResults PatientCreationResults, Guid PublicId)> AddOrUpdatePatientAsync(Patient patient, string source);
+        Task<(PatientCreationResults PatientCreationResults, Patient Patient)> AddOrUpdatePatientAsync(Patient patient, string source);
     }
 }

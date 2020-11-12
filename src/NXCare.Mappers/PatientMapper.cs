@@ -30,17 +30,22 @@ namespace NXCare.Mappers
 
             var existingPatient = await patientRepository.GetByExternalIdAsync(patient.ExternalId).ConfigureAwait(false);
 
+            var language    = await languageRepository.GetByAlpha2CodeAsync(patient.Language?.Alpha2Code).ConfigureAwait(false);
+            var nationality = await countryRepository.GetByIdAlpha2CodeAsync(patient.Nationality?.Alpha2Code).ConfigureAwait(false);
+
             var newPatient = new Patient
             {
-                BirthDate   = patient.Birthdate,
-                ExternalId  = patient.ExternalId,
-                FirstName   = patient.FirstName,
-                Language    = await languageRepository.GetByAlpha2CodeAsync(patient.Language?.Alpha2Code).ConfigureAwait(false),
-                LastName    = patient.LastName,
-                Nationality = await countryRepository.GetByIdAlpha2CodeAsync(patient.Nationality?.Alpha2Code).ConfigureAwait(false),
-                MiddleName  = patient.MiddleName,
-                Sex         = patient.Sex,
-                NationalId  = patient.NationalId
+                BirthDate     = patient.Birthdate,
+                ExternalId    = patient.ExternalId,
+                FirstName     = patient.FirstName,
+                Language      = language,
+                LanguageId    = language?.Id,
+                LastName      = patient.LastName,
+                Nationality   = nationality,
+                NationalityId = nationality?.Id,
+                MiddleName    = patient.MiddleName,
+                Sex           = patient.Sex,
+                NationalId    = patient.NationalId,
             };
 
             var isNew = existingPatient == null;

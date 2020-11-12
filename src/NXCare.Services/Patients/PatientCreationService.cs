@@ -31,8 +31,7 @@ namespace NXCare.Services.Patients
             try
             {
                 LogReceivedPatient(patient, source);
-                var (patientEntity, isNew) = await patientMapper.ToEntityAsync(patient).ConfigureAwait(false);
-                patientRepository.AddOrUpdate(patientEntity);
+                var (patientEntity, isNew) = await AddOrUpdateAsync(patient).ConfigureAwait(false);
                 await patientRepository.SaveChangesAsync().ConfigureAwait(false);
                 await addressService.AddOrUpdatePatientAddress(patientEntity.PublicId, patient.Addresses.FirstOrDefault());
                 LogAddedOrUpdatedPatient(patient, source);
@@ -44,6 +43,13 @@ namespace NXCare.Services.Patients
                 logger.LogError((int) LogEventIds.PatientCreation, ex, $"{nameof(AddOrUpdatePatientAsync)}: Data received: {patient.ToJson()}");
                 return (PatientCreationResults.Error, null);
             }
+        }
+
+        private async Task<(Domain.Entities.Patient Patient, bool IsNew)> AddOrUpdateAsync(Patient patient)
+        {
+            var patientEntity = await patientMapper.ToEntityAsync(patient).ConfigureAwait(false);
+            patientRepository.AddOrUpdate(patientEntity.Patient);
+            return (patientEntity.Patient, patientEntity.IsNew);
         }
 
         public async Task<PatientDeletionResult> DeletePatientByIdAsync(Guid id)

@@ -16,7 +16,7 @@ namespace NXCare.Data.Repositories.NXCare
         {
         }
 
-        public IQueryable<PatientAddress> Query() => Set.Include(patientAddress => patientAddress.Patient).Include(patientAddress => patientAddress.Address);
+        public IQueryable<PatientAddress> Query() => Set;//.Include(patientAddress => patientAddress.Patient).Include(patientAddress => patientAddress.Address);
 
         public Task<PatientAddress> GetPatientAndAddressByPatientExternalId(string externalId)
         {

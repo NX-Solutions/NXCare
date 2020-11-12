@@ -48,10 +48,9 @@ namespace NXCare.Services.Addresses
 
         private async Task UpdatePatientAddressAsync(Domain.DTO.Address address, Domain.Entities.PatientAddress patientAddressEntity)
         {
-            var addressOfPatient = await addressMapper.ToEntityAsync(address);
-
-            addressOfPatient.Id          = patientAddressEntity.AddressId;
-            patientAddressEntity.Address = addressOfPatient;
+            var addressOfPatient            = await addressMapper.ToEntityAsync(address);
+            patientAddressEntity.Address    = addressOfPatient;
+            patientAddressEntity.Address.Id = patientAddressEntity.AddressId;
             patientAddressRepository.Update(patientAddressEntity);
         }
     }

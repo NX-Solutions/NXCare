@@ -79,7 +79,7 @@ namespace NXCare.Data.Repositories.Base
         public virtual void Update(TEntity entity)
         {
             var existingEntity = Set.Local.FirstOrDefault(localEntity => localEntity.Id.Equals(entity.Id));
-            if (existingEntity != null)
+            if (existingEntity != null && !ReferenceEquals(existingEntity, entity))
             {
                 context.Entry(existingEntity).CurrentValues.SetValues(entity);
             }

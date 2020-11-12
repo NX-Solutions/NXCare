@@ -10,9 +10,12 @@ namespace NXCare.Data.Repositories.NXCare
 {
     public class PatientRepository : PublicBaseRepository<Patient, int, Guid, string>, IPatientRepository
     {
+        private readonly NXCareContext context;
+
         /// <inheritdoc />
         public PatientRepository(NXCareContext context) : base(context)
         {
+            this.context = context;
         }
 
         public Task<Patient> GetByIdAsync(int id, bool includeAllRelationships = false)
@@ -23,6 +26,12 @@ namespace NXCare.Data.Repositories.NXCare
                     .Include(patient => patient.PatientAddress.Address).ThenInclude(patient => patient.PatientAddress.Address.Country)
                     .Include(patient => patient.Nationality)
                     .FirstOrDefaultAsync(patient => patient.Id == id);
+        }
+
+        public async Task<Address> GetPatientAddressByPatientId(int patientId)
+        {
+            var patientAddress = await context.PatientAddress.Include(pa => pa.Address).FirstOrDefaultAsync(pa => pa.PatientId == patientId);
+            return patientAddress?.Address;
         }
     }
 }

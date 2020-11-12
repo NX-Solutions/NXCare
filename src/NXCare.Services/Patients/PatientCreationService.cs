@@ -14,14 +14,12 @@ namespace NXCare.Services.Patients
     public class PatientCreationService : IPatientCreationService
     {
         private readonly ILogger<PatientCreationService> logger;
-        private readonly IAddressService addressService;
         private readonly IPatientRepository patientRepository;
         private readonly IPatientMapper patientMapper;
 
-        public PatientCreationService(ILogger<PatientCreationService> logger, IAddressService addressService, IPatientRepository patientRepository, IPatientMapper patientMapper)
+        public PatientCreationService(ILogger<PatientCreationService> logger, IPatientRepository patientRepository, IPatientMapper patientMapper)
         {
             this.logger                   = logger;
-            this.addressService           = addressService;
             this.patientRepository        = patientRepository;
             this.patientMapper            = patientMapper;
         }
@@ -32,11 +30,6 @@ namespace NXCare.Services.Patients
             {
                 LogReceivedPatient(patient, source);
                 var (patientEntity, isNew) = await AddOrUpdateAsync(patient).ConfigureAwait(false);
-                await patientRepository.SaveChangesAsync().ConfigureAwait(false);
-
-                if (patient?.Addresses != null && patient.Addresses.Count > 0)
-                    await addressService.AddOrUpdatePatientAddress(patientEntity.PublicId, patient.Addresses?.FirstOrDefault());
-
                 LogAddedOrUpdatedPatient(patient, source);
                 return (isNew ? PatientCreationResults.Created : PatientCreationResults.Updated, patientMapper.ToDTO(await patientRepository.GetByIdAsync(patientEntity.Id, true)));
             }
@@ -49,18 +42,20 @@ namespace NXCare.Services.Patients
 
         private async Task<(Domain.Entities.Patient Patient, bool IsNew)> AddOrUpdateAsync(Patient patient)
         {
-            var patientEntity = await patientMapper.ToEntityAsync(patient).ConfigureAwait(false);
+            var mappedResults = await patientMapper.ToNewOrUpdatedEntityAsync(patient).ConfigureAwait(false);
 
-            if (patientEntity.IsNew)
+            if (mappedResults.IsNew)
             {
-                patientRepository.Add(patientEntity.Patient);
+                patientRepository.Add(mappedResults.Patient);
             }
             else
             {
-                patientRepository.Update(patientEntity.Patient);
+                patientRepository.Update(mappedResults.Patient);
             }
 
-            return (patientEntity.Patient, patientEntity.IsNew);
+            await patientRepository.SaveChangesAsync().ConfigureAwait(false);
+
+            return (mappedResults.Patient, mappedResults.IsNew);
         }
 
         public async Task<PatientDeletionResult> DeletePatientByIdAsync(Guid id)

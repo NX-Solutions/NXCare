@@ -64,16 +64,18 @@ namespace NXCare.Mappers
 
             return new Domain.DTO.Patient
             {
-                Id         = patient.PublicId,
-                Nationality = new Country
-                {
-                    Id          = patient.Nationality.Id,
-                    Alpha2Code  = patient.Nationality.Alpha2Code,
-                    Alpha3Code  = patient.Nationality.Alpha3Code,
-                    Name        = patient.Nationality.NameTranslationKey,
-                    NumericCode = patient.Nationality.NumericCode
-                },
-                Addresses  = new List<Address> {addressMapper.ToDTO(patient.PatientAddress.Address)},
+                Id          = patient.PublicId,
+                Nationality = patient.Nationality == null
+                    ? null
+                    : new Country
+                    {
+                        Id          = patient.Nationality?.Id ?? 0,
+                        Alpha2Code  = patient.Nationality.Alpha2Code,
+                        Alpha3Code  = patient.Nationality.Alpha3Code,
+                        Name        = patient.Nationality.NameTranslationKey,
+                        NumericCode = patient.Nationality.NumericCode
+                    },
+                Addresses  = new List<Address> {addressMapper.ToDTO(patient.PatientAddress?.Address)},
                 ExternalId = patient.ExternalId,
                 NationalId = patient.NationalId,
                 Birthdate  = patient.BirthDate,

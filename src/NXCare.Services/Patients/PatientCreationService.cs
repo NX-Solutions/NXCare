@@ -33,9 +33,11 @@ namespace NXCare.Services.Patients
                 LogReceivedPatient(patient, source);
                 var (patientEntity, isNew) = await AddOrUpdateAsync(patient).ConfigureAwait(false);
                 await patientRepository.SaveChangesAsync().ConfigureAwait(false);
-                await addressService.AddOrUpdatePatientAddress(patientEntity.PublicId, patient.Addresses.FirstOrDefault());
-                LogAddedOrUpdatedPatient(patient, source);
 
+                if (patient?.Addresses != null && patient.Addresses.Count > 0)
+                    await addressService.AddOrUpdatePatientAddress(patientEntity.PublicId, patient.Addresses?.FirstOrDefault());
+
+                LogAddedOrUpdatedPatient(patient, source);
                 return (isNew ? PatientCreationResults.Created : PatientCreationResults.Updated, patientMapper.ToDTO(await patientRepository.GetByIdAsync(patientEntity.Id, true)));
             }
             catch (Exception ex)
@@ -48,7 +50,16 @@ namespace NXCare.Services.Patients
         private async Task<(Domain.Entities.Patient Patient, bool IsNew)> AddOrUpdateAsync(Patient patient)
         {
             var patientEntity = await patientMapper.ToEntityAsync(patient).ConfigureAwait(false);
-            patientRepository.AddOrUpdate(patientEntity.Patient);
+
+            if (patientEntity.IsNew)
+            {
+                patientRepository.Add(patientEntity.Patient);
+            }
+            else
+            {
+                patientRepository.Update(patientEntity.Patient);
+            }
+
             return (patientEntity.Patient, patientEntity.IsNew);
         }
 

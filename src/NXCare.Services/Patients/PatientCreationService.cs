@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NXCare.Domain.DTO;
@@ -30,7 +29,7 @@ namespace NXCare.Services.Patients
             {
                 LogReceivedPatient(patient, source);
                 var (patientEntity, isNew) = await AddOrUpdateAsync(patient).ConfigureAwait(false);
-                LogAddedOrUpdatedPatient(patient, source);
+                LogAddedOrUpdatedPatient(patient, source, isNew);
                 return (isNew ? PatientCreationResults.Created : PatientCreationResults.Updated, patientMapper.ToDTO(await patientRepository.GetByIdAsync(patientEntity.Id, true)));
             }
             catch (Exception ex)
@@ -105,9 +104,9 @@ namespace NXCare.Services.Patients
             logger.LogInformation((int) LogEventIds.PatientCreation, $"A new patient with external id `{patientDTO.ExternalId}` - {patientDTO.FirstName} {patientDTO.LastName} received from {source}");
         }
 
-        private void LogAddedOrUpdatedPatient(Patient patientDTO, string source)
+        private void LogAddedOrUpdatedPatient(Patient patientDTO, string source, bool isNew)
         {
-            logger.LogInformation((int) LogEventIds.PatientCreation, $"Patient sent by {source} with external id `{patientDTO.ExternalId} - {patientDTO.FirstName} {patientDTO.LastName} was successfully added to the database ");
+            logger.LogInformation((int) LogEventIds.PatientCreation, $"Patient sent by {source} with external id `{patientDTO.ExternalId} - {patientDTO.FirstName} {patientDTO.LastName} was successfully {(isNew ? "added" : "updated")}");
         }
     }
 }

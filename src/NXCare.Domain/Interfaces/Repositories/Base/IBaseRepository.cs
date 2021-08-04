@@ -106,6 +106,8 @@ namespace NXCare.Domain.Interfaces.Repositories.Base
         /// <returns></returns>
         TEntity SoftDelete(TEntity entity);
 
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
         Task<bool> ExistsAsync(TKey id);
     }
 }

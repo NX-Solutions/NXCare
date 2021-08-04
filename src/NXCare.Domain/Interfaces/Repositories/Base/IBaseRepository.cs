@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using NXCare.Domain.Interfaces.Entities;
 
@@ -104,5 +105,7 @@ namespace NXCare.Domain.Interfaces.Repositories.Base
         /// <param name="entity">the entity to soft delete by setting DeletedOn property to UtcNow</param>
         /// <returns></returns>
         TEntity SoftDelete(TEntity entity);
+
+        Task<bool> ExistsAsync(TKey id);
     }
 }

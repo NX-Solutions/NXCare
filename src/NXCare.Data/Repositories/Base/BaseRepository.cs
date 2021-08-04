@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using NXCare.Domain.Entities.Base;
@@ -138,5 +139,12 @@ namespace NXCare.Data.Repositories.Base
             var entity = await GetByIdAsync(id).ConfigureAwait(false);
             return SoftDelete(entity);
         }
+
+        public async Task<bool> ExistsAsync(TKey id)
+        {
+            return await Set.FindAsync(id).ConfigureAwait(false) != null;
+        }
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -16,16 +16,27 @@ namespace NXCare.Data.Contexts.NXCare
         }
 
         public virtual DbSet<Address> Address { get; set; }
+
         public virtual DbSet<Country> Country { get; set; }
+
         public virtual DbSet<Language> Language { get; set; }
+
         public virtual DbSet<Location> Location { get; set; }
+
         public virtual DbSet<Patient> Patient { get; set; }
+
         public virtual DbSet<PatientAddress> PatientAddress { get; set; }
+
         public virtual DbSet<Physician> Physician { get; set; }
+
         public virtual DbSet<PhysicianAddress> PhysicianAddress { get; set; }
+
         public virtual DbSet<Service> Service { get; set; }
+
         public virtual DbSet<Speciality> Speciality { get; set; }
+
         public virtual DbSet<Transition> Transition { get; set; }
+
         public virtual DbSet<Visit> Visit { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -289,19 +300,19 @@ namespace NXCare.Data.Contexts.NXCare
             modelBuilder.Entity<Transition>(entity =>
             {
                 entity.HasIndex(e => e.AdmittingPhysicianId)
-                    .HasName("IX_Transition_Admitting_Physician");
+                    .HasDatabaseName("IX_Transition_Admitting_Physician");
 
                 entity.HasIndex(e => e.AttendingPhysicianId)
-                    .HasName("IX_Transition_Attending_Physician");
+                    .HasDatabaseName("IX_Transition_Attending_Physician");
 
                 entity.HasIndex(e => e.ConsultingPhysicianId)
-                    .HasName("IX_Transition_Consulting_Physician");
+                    .HasDatabaseName("IX_Transition_Consulting_Physician");
 
                 entity.HasIndex(e => e.Id)
-                    .HasName("IX_Transition_Visit");
+                    .HasDatabaseName("IX_Transition_Visit");
 
                 entity.HasIndex(e => e.ReferringPhysicianId)
-                    .HasName("IX_Transition_Referring_Physician");
+                    .HasDatabaseName("IX_Transition_Referring_Physician");
 
                 entity.Property(e => e.CreatedOn).HasDefaultValueSql("(getutcdate())");
 
